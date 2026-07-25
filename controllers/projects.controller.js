@@ -1,4 +1,5 @@
-const Project = require('../models/Project');
+const Project = require('../models/project');
+const { formatDocument } = require('../utils/formatResponse');
 
 exports.addProject = async (req, res) => {
   try {
@@ -6,7 +7,7 @@ exports.addProject = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Project added successfully.",
-      data: project,
+      data: formatDocument(project),
     });
   } catch (error) {
     res.status(500).json({
@@ -22,7 +23,7 @@ exports.getAllProjects = async (req, res) => {
     res.json({
       success: true,
       message: "Projects retrieved successfully.",
-      data: projects,
+      data: projects.map(formatDocument),
     });
   } catch (error) {
     res.status(500).json({
@@ -44,7 +45,7 @@ exports.getProjectById = async (req, res) => {
     res.json({
       success: true,
       message: "Project retrieved successfully.",
-      data: project,
+      data: formatDocument(project),
     });
   } catch (error) {
     res.status(500).json({

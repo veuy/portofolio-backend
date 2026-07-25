@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { formatDocument } = require('../utils/formatResponse');
 
 exports.addUser = async (req, res) => {
   try {
@@ -6,7 +7,7 @@ exports.addUser = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "User added successfully.",
-      data: user,
+      data: formatDocument(user),
     });
   } catch (error) {
     res.status(500).json({
@@ -22,7 +23,7 @@ exports.getAllUsers = async (req, res) => {
     res.json({
       success: true,
       message: "Users retrieved successfully.",
-      data: users,
+      data: users.map(formatDocument),
     });
   } catch (error) {
     res.status(500).json({
@@ -44,7 +45,7 @@ exports.getUserById = async (req, res) => {
     res.json({
       success: true,
       message: "User retrieved successfully.",
-      data: user,
+      data: formatDocument(user),
     });
   } catch (error) {
     res.status(500).json({
@@ -56,6 +57,7 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
+    req.body.updated = new Date();
     await User.findByIdAndUpdate(req.params.id, req.body);
     res.json({
       success: true,

@@ -1,4 +1,5 @@
-const Reference = require('../models/Reference');
+const Reference = require('../models/reference');
+const { formatDocument } = require('../utils/formatResponse');
 
 exports.addReference = async (req, res) => {
   try {
@@ -6,7 +7,7 @@ exports.addReference = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Reference added successfully.",
-      data: reference,
+      data: formatDocument(reference),
     });
   } catch (error) {
     res.status(500).json({
@@ -22,7 +23,7 @@ exports.getAllReferences = async (req, res) => {
     res.json({
       success: true,
       message: "References retrieved successfully.",
-      data: references,
+      data: references.map(formatDocument),
     });
   } catch (error) {
     res.status(500).json({
@@ -44,7 +45,7 @@ exports.getReferenceById = async (req, res) => {
     res.json({
       success: true,
       message: "Reference retrieved successfully.",
-      data: reference,
+      data: formatDocument(reference),
     });
   } catch (error) {
     res.status(500).json({

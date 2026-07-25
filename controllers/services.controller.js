@@ -1,4 +1,5 @@
-const Service = require("../models/Service");
+const Service = require("../models/service");
+const { formatDocument } = require("../utils/formatResponse");
 
 exports.addService = async (req, res) => {
   try {
@@ -7,7 +8,7 @@ exports.addService = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Service added successfully.",
-      data: service,
+      data: formatDocument(service),
     });
   } catch (error) {
     res.status(500).json({
@@ -24,7 +25,7 @@ exports.getAllServices = async (req, res) => {
     res.json({
       success: true,
       message: "Services retrieved successfully.",
-      data: services,
+      data: services.map(formatDocument),
     });
   } catch (error) {
     res.status(500).json({
@@ -48,7 +49,7 @@ exports.getServiceById = async (req, res) => {
     res.json({
       success: true,
       message: "Service retrieved successfully.",
-      data: service,
+      data: formatDocument(service),
     });
   } catch (error) {
     res.status(500).json({
