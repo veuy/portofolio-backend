@@ -4,7 +4,8 @@ const { formatDocument } = require('../utils/formatResponse');
 
 // Helper: generate JWT token
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+  const secret = process.env.JWT_SECRET || 'portfolio_jwt_secret_key_2026_secure';
+  return jwt.sign({ userId }, secret, { expiresIn: '7d' });
 };
 
 // Sign Up
