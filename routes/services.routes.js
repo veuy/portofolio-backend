@@ -1,6 +1,6 @@
 const express = require("express");
-
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 const {
   addService,
@@ -10,10 +10,13 @@ const {
   deleteService,
 } = require("../controllers/services.controller");
 
+// Public routes
 router.get("/", getAllServices);
 router.get("/:id", getServiceById);
-router.post("/", addService);
-router.put("/:id", updateService);
-router.delete("/:id", deleteService);
+
+// Protected routes (auth required)
+router.post("/", auth, addService);
+router.put("/:id", auth, updateService);
+router.delete("/:id", auth, deleteService);
 
 module.exports = router;

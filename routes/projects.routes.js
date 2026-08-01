@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 const {
   addProject,
@@ -9,10 +10,13 @@ const {
   deleteProject,
 } = require("../controllers/projects.controller");
 
+// Public routes
 router.get("/", getAllProjects);
 router.get("/:id", getProjectById);
-router.post("/", addProject);
-router.put("/:id", updateProject);
-router.delete("/:id", deleteProject);
+
+// Protected routes (auth required)
+router.post("/", auth, addProject);
+router.put("/:id", auth, updateProject);
+router.delete("/:id", auth, deleteProject);
 
 module.exports = router;

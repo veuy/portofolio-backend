@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 const {
   addReference,
@@ -9,10 +10,13 @@ const {
   deleteReference,
 } = require("../controllers/references.controller");
 
+// Public routes
 router.get("/", getAllReferences);
 router.get("/:id", getReferenceById);
-router.post("/", addReference);
-router.put("/:id", updateReference);
-router.delete("/:id", deleteReference);
+
+// Protected routes (auth required)
+router.post("/", auth, addReference);
+router.put("/:id", auth, updateReference);
+router.delete("/:id", auth, deleteReference);
 
 module.exports = router;
